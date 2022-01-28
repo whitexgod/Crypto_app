@@ -1,0 +1,11 @@
+.coin-container{
+    display: flex;
+    justify-content: center;
+}
+.coin-row{
+    display: flex;
+    flex-direction: row;
+    justify-items: start;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
