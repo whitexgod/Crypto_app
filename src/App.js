@@ -6,17 +6,22 @@ import { Coin } from './Coin';
 
 function App() {
 
-  const api = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+  const api = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=10&page=1&sparkline=false"
 
   const [coins, setCoins] = useState([])
   const [search, setSearch] = useState('')
 
-  useEffect(() => {
+  function getData() {
     axios.get(api)
       .then(res => {
         setCoins(res.data);
       })
       .catch(error => console.log(error))
+  }
+
+  useEffect(() => {
+    getData();
+    setInterval(getData, 5000)
   }, [])
 
   const filteredCoins = coins.filter(coin =>
@@ -37,6 +42,7 @@ function App() {
         {filteredCoins.map(coin => {
           return (
             <Coin key={coin.id}
+              coin_id={coin.id}
               coin_rank={coin.market_cap_rank}
               coin_name={coin.name}
               coin_image={coin.image}
@@ -48,7 +54,6 @@ function App() {
               coin_volume={coin.total_volume} />
           )
         })}
-
       </div>
     </div>
   );
