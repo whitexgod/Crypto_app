@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Coin } from './Coin';
 //follow the readme to get the parent site for the API
@@ -11,43 +11,45 @@ function App() {
   const [coins, setCoins] = useState([])
   const [search, setSearch] = useState('')
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get(api)
-    .then(res => {
-      setCoins(res.data);
-      //console.log(res.data);
-    })
-    .catch(error => console.log(error))
-  },[])
+      .then(res => {
+        setCoins(res.data);
+      })
+      .catch(error => console.log(error))
+  }, [])
 
-  const filteredCoins = coins.filter(coin => 
+  const filteredCoins = coins.filter(coin =>
     coin.name.toLowerCase().includes(search.toLowerCase())
-    )
+  )
 
   return (
     <div className="App">
-      <h1>Crypto World</h1>
-      <div>
+      <header>
+        <h1>Crypto World</h1>
         <form>
-          <input placeholder='search for a crypto here...' type="text" name='cryto-search' onChange={
-            (e) => {setSearch(e.target.value)}
-            } />
+          <input placeholder='Search Crypto Here...' type="text" name='cryto-search' onChange={
+            (e) => { setSearch(e.target.value) }
+          } />
         </form>
+      </header>
+      <div className='coin-body'>
+        {filteredCoins.map(coin => {
+          return (
+            <Coin key={coin.id}
+              coin_rank={coin.market_cap_rank}
+              coin_name={coin.name}
+              coin_image={coin.image}
+              coin_symbol={coin.symbol}
+              coin_price={coin.current_price}
+              coin_marketCap={coin.market_cap}
+              priceChange={coin.price_change_percentage_24h}
+              priceChangeMarketCap={coin.market_cap_change_percentage_24h}
+              coin_volume={coin.total_volume} />
+          )
+        })}
+
       </div>
-      {filteredCoins.map(coin => {
-        return (
-          <Coin key={coin.id}
-          coin_rank={coin.market_cap_rank}
-          coin_name={coin.name}
-          coin_image={coin.image}
-          coin_symbol={coin.symbol}
-          coin_price={coin.current_price}
-          coin_marketCap={coin.market_cap}
-          priceChange={coin.price_change_percentage_24h} 
-          priceChangeMarketCap={coin.market_cap_change_percentage_24h}
-          coin_volume={coin.total_volume} />
-        )
-      })}
     </div>
   );
 }

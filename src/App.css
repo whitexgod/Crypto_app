@@ -1,8 +1,72 @@
-.App{
-    justify-content: center;
-    justify-items: center;
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "PT Sans", sans-serif;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
     align-items: center;
-    text-align: center;
-    margin: 50px;
-    
+    padding: 0.8rem 1rem;
+    background-color: rgb(240 240 240);
+    gap: 1rem;
+    border-bottom: 2px solid #0707ff;
+    box-shadow: 0 0 1rem #1616a8;
+
+    /* for dark mode */
+    /* background-color: rgb(52 60 61); */
+}
+
+header h1 {
+    letter-spacing: 0.05rem;
+    text-shadow: 0 0 1rem #62688f;
+}
+
+header form input {
+    width: 12rem;
+    height: 2rem;
+    border-radius: 5px;
+    padding: 0 0.7rem;
+    border: 2px solid rgb(138 146 178);
+    font-size: 0.9rem;
+    transition: 150ms ease-in-out;
+
+    /* for dark mode */
+    /* background: #4d4a4a;
+    color: white;
+    border: 1px solid #31e235; */
+}
+
+header form input:focus {
+    outline: 1px solid rgb(119 119 190);
+    box-shadow: 0 0 1rem #7878be;
+}
+
+.coin-body {
+    display: flex;
+    background-color: lightgrey;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 6rem 1rem 1rem 1rem;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 498px) {
+    header {
+        flex-direction: column;
+    }
+    .coin-body {
+        padding: 10rem 1rem 1rem 1rem;
+    }
 }

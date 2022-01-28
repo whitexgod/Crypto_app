@@ -2,33 +2,19 @@ import React from 'react';
 import "./Coin.css"
 
 export const Coin = (props) => {
-  return <div>
-      <div className='coin-container'>
-          <div className='coin-row'>
+    return (
+        <div className='coin-box'>
             <div className='coin'>
                 <img src={props.coin_image} alt="crypto-image" />
-                <h1>Name : {props.coin_name}</h1>
-                <p>{props.coin_symbol}</p>
-                <p>Rank : {props.coin_rank}</p>
+                <h1>{props.coin_name} ({props.coin_symbol})</h1>
+                <strong>Rank: {props.coin_rank}</strong>
             </div>
             <div className='coin-data'>
-                <p>Current-Price : Rs. {props.coin_price}</p>
-                <p>Volume : Rs. {props.coin_volume.toLocaleString()}</p>
-                <p>Market-Cap : Rs. {props.coin_marketCap.toLocaleString()}</p>
-                {props.priceChange < 0 ? (
-                    <p className='coin-present-red'>% Price-change-1D : {props.priceChange.toFixed(2)}%</p>
-                ) : (
-                    <p className='coin-present-green'>% Price-change-1D : {props.priceChange.toFixed(2)}%</p>
-                )
-                }
-                {props.priceChangeMarketCap < 0 ? (
-                    <p className='coin-present-red'>% Market Cap-change-1D : {props.priceChangeMarketCap.toFixed(2)}%</p>
-                ) : (
-                    <p className='coin-present-green'>% Market Cap-change-1D : {props.priceChangeMarketCap.toFixed(2)}%</p>
-                )
-                }
+                <p><strong>Current price:</strong> Rs. {props.coin_price}</p>
+                <p><strong>Volume:</strong> Rs. {props.coin_volume.toLocaleString()}</p>
+                <p><strong>Market-Cap:</strong> Rs. {props.coin_marketCap.toLocaleString()}</p>
+                <p className={props.priceChange < 0 ? "coin-present-red" : "coin-present-green"}><strong>% Price-change-1D: </strong>{props.priceChange.toFixed(2)}%</p>
+                <p className={props.priceChangeMarketCap < 0 ? "coin-present-red" : "coin-present-green"}><strong>% Market Cap-change-1D: </strong>{props.priceChangeMarketCap.toFixed(2)}%</p>
             </div>
-          </div>
-      </div>
-  </div>;
+        </div>);
 };
