@@ -5,7 +5,7 @@ export const Coin = (props) => {
     return (
         <div className='coin-box'>
             <div className='coin'>
-                <img src={props.coin_image} alt="crypto-image" />
+                <img src={props.coin_image} alt="crypto" />
                 <h1>{props.coin_name} ({props.coin_symbol})</h1>
                 <strong>Rank: {props.coin_rank}</strong>
             </div>
