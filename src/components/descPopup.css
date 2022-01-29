@@ -1,0 +1,60 @@
+.popup {
+    z-index: 9999;
+    position: fixed;
+    overflow-y: scroll;
+    background-color: #d3d3d3b3;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.loadder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 85vh;
+}
+
+.loadder img {
+    width: 6rem;
+    aspect-ratio: 1;
+    animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(-360deg);
+    }
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.close-btn img {
+    width: 2rem;
+    aspect-ratio: 1;
+    transition: 200ms ease-in-out;
+}
+
+.close-btn img:hover {
+    transform: rotate(90deg);
+}
+
+.details-box {
+    margin-top: 2rem;
+    background-color: #bababa;
+    padding: 1rem;
+}
+
+.details-box p {
+    font-size: 1.15rem;
+}

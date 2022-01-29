@@ -7,6 +7,17 @@
     font-family: "PT Sans", sans-serif;
 }
 
+.fixed-noscroll {
+    filter: blur(2px);
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
+}
+
+.wrapper {
+    transition: 300ms ease-out;
+}
+
 header {
     position: absolute;
     top: 0;
