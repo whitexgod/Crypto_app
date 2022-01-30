@@ -1,5 +1,4 @@
 .coin-box {
-    margin-top: 2rem;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -10,16 +9,32 @@
     gap: 1rem;
     padding: 1rem;
     border: 1px solid #0affe6;
+    border-radius: 0.5rem;
     box-shadow: 0 0 1rem #8181c0;
     transition: 200ms ease-out;
-    line-height: .5rem;
 }
 
 .coin-box:hover {
     transform: scale(1.05);
-    cursor: pointer;
 }
 
+.wishlist-heart {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.8rem;
+    height: 1.7rem;
+}
+
+.wishlist-heart > img {
+    width: 1.7rem;
+    aspect-ratio: 1;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+}
+
+.wishlist-heart > img:active {
+    transform: scale(1.2);
+}
 .coin {
     width: 100%;
     text-align: center;
@@ -28,8 +43,14 @@
 .coin img {
     width: 10rem;
     aspect-ratio: 1;
+    border: 1px solid #8a92b2;
+    border-radius: 1rem;
+    padding: 0.2rem;
 }
-.coin h1{
+.coin > img:hover {
+    cursor: pointer;
+}
+.coin h1 {
     font-size: 1.5rem;
 }
 .coin-data {
@@ -46,20 +67,19 @@
     color: green;
 }
 
-@media all and (max-width:420px){
-    .coin img{
-        width: 5rem;
+@media all and (max-width: 420px) {
+    .coin img {
+        width: 7rem;
     }
-    .coin-box{
-        margin-top: 1rem;
-        min-width: 18rem;
-        min-height: 17rem;
-        line-height: .4rem;
+    .coin-box {
+        min-width: 17rem;
+        min-height: 22rem;
+        gap: 0.5rem;
     }
-    .coin-data{
-        font-size: .9rem;
+    .coin-data {
+        font-size: 0.9rem;
     }
-    .coin h1{
+    .coin h1 {
         font-size: 1rem;
     }
     .coin-box:hover {

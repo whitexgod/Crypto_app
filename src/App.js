@@ -3,11 +3,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Coin } from "./components/Coin";
 import DescPopup from "./components/DescPopup";
-import { SignIn } from "./components/SignIn";
+import SignIn from "./components/SignIn";
 import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SignOut } from "./components/SignOut";
-import { WishList } from "./components/WishList";
 //follow the readme to get the parent site for the API
 
 function App() {
@@ -17,9 +16,25 @@ function App() {
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState("");
   const [coinId, setCoinId] = useState("");
-  const [coinImg, setCoinImg] = useState("");
   const [signIn, setSignIn] = useState(false);
   const [user] = useAuthState(auth);
+  // const [wishlist, setwishlist] = useState(["bitcoin", "ethereum", "tether", "cardano","dogecoin"]);
+  const wishlist = ["bitcoin", "ethereum", "tether", "cardano","dogecoin"];
+
+  // function modifyWishList (elem) {
+  //   if (wishlist.includes(elem)) {
+  //     let mod = wishlist.filter((e)=>{
+  //       return e !== elem;
+  //     })
+  //     setwishlist(mod);
+  //   } else {
+  //     let tmp = wishlist;
+  //     tmp.push(elem);
+  //     setwishlist(tmp);
+  //   }
+  //   console.log(elem);
+  //   setTimeout(()=>{console.log(wishlist)}, 3000);
+  // }
 
   function getData() {
     axios
@@ -48,11 +63,11 @@ function App() {
         <DescPopup
           coin_id={coinId}
           changeCoinId={setCoinId}
-          coin_img={coinImg}
         />
       ) : (
         ""
       )}
+      {signIn ? <SignIn dontWantToSignIn={setSignIn} /> : ""}
       <div className={`wrapper ${coinId.length ? "fixed-noscroll" : ""}`}>
         <header>
           <h1>Crypto Tracker</h1>
@@ -71,6 +86,7 @@ function App() {
               <SignOut />
             ) : (
               <button
+              className="btn_glob"
                 onClick={() => {
                   setSignIn(true);
                 }}
@@ -78,23 +94,11 @@ function App() {
                 Sign In
               </button>
             )}
-            {signIn ? <SignIn dontWantToSignIn={setSignIn} /> : ""}
           </div>
         </header>
-        <div className="wishlist-body">
-          {user ? (
-            <WishList
-              userId={user.uid}
-              userEmail={user.email}
-              userPhoto={user.photoURL}
-            />
-          ) : (
-            ""
-          )}
-        </div>
-        <div className="coin-body" style={user? {width:"80%"} : {width:"100%"}}>
-          {filteredCoins.map((coin) => {
-            return (
+      <div className={`coin-body ${signIn ? "fixed-noscroll":""}`}>
+        {filteredCoins.map((coin) => {
+          return (
               <Coin
                 key={coin.id}
                 coin_id={coin.id}
@@ -108,7 +112,8 @@ function App() {
                 priceChangeMarketCap={coin.market_cap_change_percentage_24h}
                 coin_volume={coin.total_volume}
                 changeCoinId={setCoinId}
-                changeCoinImg={setCoinImg}
+                iswish={(user && wishlist.includes(coin.id))}
+                // changeWishlist={modifyWishList}
               />
             );
           })}
