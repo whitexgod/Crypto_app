@@ -1,31 +1,33 @@
-import './App.css';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Coin } from './components/Coin';
-import DescPopup from './components/DescPopup';
-import { SignIn } from './components/SignIn';
-import {auth} from "./firebase"
-import {useAuthState} from "react-firebase-hooks/auth"
-import { SignOut } from './components/SignOut';
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Coin } from "./components/Coin";
+import DescPopup from "./components/DescPopup";
+import { SignIn } from "./components/SignIn";
+import { auth } from "./firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { SignOut } from "./components/SignOut";
+import { WishList } from "./components/WishList";
 //follow the readme to get the parent site for the API
 
 function App() {
+  const api =
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=50&page=1&sparkline=false";
 
-  const api = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=50&page=1&sparkline=false"
-
-  const [coins, setCoins] = useState([])
-  const [search, setSearch] = useState('')
+  const [coins, setCoins] = useState([]);
+  const [search, setSearch] = useState("");
   const [coinId, setCoinId] = useState("");
-  const [coinImg, setCoinImg] = useState("")
-  const [signIn, setSignIn] = useState(false)
-  const [user] = useAuthState(auth)
+  const [coinImg, setCoinImg] = useState("");
+  const [signIn, setSignIn] = useState(false);
+  const [user] = useAuthState(auth);
 
   function getData() {
-    axios.get(api)
-      .then(res => {
+    axios
+      .get(api)
+      .then((res) => {
         setCoins(res.data);
       })
-      .catch(error => console.log(error))
+      .catch((error) => console.log(error));
   }
 
   useEffect(() => {
@@ -34,32 +36,67 @@ function App() {
 
     // keep quite eslint......
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
-  const filteredCoins = coins.filter(coin =>
+  const filteredCoins = coins.filter((coin) =>
     coin.name.toLowerCase().includes(search.toLowerCase())
-  )
-  
+  );
+
   return (
-    <div className='App'>
-      {coinId.length ? <DescPopup coin_id={coinId} changeCoinId={setCoinId} coin_img={coinImg} /> : ""}
+    <div className="App">
+      {coinId.length ? (
+        <DescPopup
+          coin_id={coinId}
+          changeCoinId={setCoinId}
+          coin_img={coinImg}
+        />
+      ) : (
+        ""
+      )}
       <div className={`wrapper ${coinId.length ? "fixed-noscroll" : ""}`}>
         <header>
           <h1>Crypto Tracker</h1>
           <form>
-            <input placeholder='Search Crypto Here...' type="text" name='cryto-search' onChange={
-              (e) => { setSearch(e.target.value) }
-            } />
+            <input
+              placeholder="Search Crypto Here..."
+              type="text"
+              name="cryto-search"
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
           </form>
-          <div className='signIn'>
-            {user? <SignOut/>:<button onClick={()=>{setSignIn(true)}}>Sign In</button>}
-            {signIn? <SignIn dontWantToSignIn={setSignIn}/>:""}
+          <div className="signIn-signOut">
+            {user ? (
+              <SignOut />
+            ) : (
+              <button
+                onClick={() => {
+                  setSignIn(true);
+                }}
+              >
+                Sign In
+              </button>
+            )}
+            {signIn ? <SignIn dontWantToSignIn={setSignIn} /> : ""}
           </div>
         </header>
-        <div className='coin-body'>
-          {filteredCoins.map(coin => {
+        <div className="wishlist-body">
+          {user ? (
+            <WishList
+              userId={user.uid}
+              userEmail={user.email}
+              userPhoto={user.photoURL}
+            />
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="coin-body" style={user? {width:"80%"} : {width:"100%"}}>
+          {filteredCoins.map((coin) => {
             return (
-              <Coin key={coin.id}
+              <Coin
+                key={coin.id}
                 coin_id={coin.id}
                 coin_rank={coin.market_cap_rank}
                 coin_name={coin.name}
@@ -71,8 +108,9 @@ function App() {
                 priceChangeMarketCap={coin.market_cap_change_percentage_24h}
                 coin_volume={coin.total_volume}
                 changeCoinId={setCoinId}
-                changeCoinImg={setCoinImg} />
-            )
+                changeCoinImg={setCoinImg}
+              />
+            );
           })}
         </div>
       </div>
@@ -81,4 +119,3 @@ function App() {
 }
 
 export default App;
-

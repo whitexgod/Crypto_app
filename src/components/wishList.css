@@ -1,0 +1,9 @@
+.wishList{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.wishList img{
+    border-radius: 50%;
+}

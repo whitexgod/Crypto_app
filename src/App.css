@@ -20,6 +20,7 @@
 
 header {
     position: absolute;
+    z-index: 9999999999;
     top: 0;
     left: 0;
     right: 0;
@@ -72,6 +73,12 @@ header form input:focus {
     min-height: 100vh;
     overflow-x: hidden;
 }
+.wishlist-body{
+    position: relative;
+    left: 80%;
+    width: 20%;
+    top: 6rem;
+}
 
 @media screen and (max-width: 498px) {
     header {
@@ -79,5 +86,6 @@ header form input:focus {
     }
     .coin-body {
         padding: 10rem 1rem 1rem 1rem;
+        width: 70%;
     }
 }
