@@ -56,7 +56,7 @@ const DescriptionPopup = ({ coin_id, changeCoinId }) => {
                                 " "
                             )}
                         </p>
-                        <h3>Homepage : <a href={`${fetchedData.links.homepage}\en`} target="_blank">{fetchedData.links.homepage}</a></h3>
+                        <h3>Homepage : <a href={`${fetchedData.links.homepage}/en`} target="_blank" rel="noreferrer">{fetchedData.links.homepage}</a></h3>
                     </div>
                 </>
             )}
