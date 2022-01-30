@@ -52,8 +52,8 @@ function App() {
             } />
           </form>
           <div className='signIn'>
-            <button onClick={()=>{setSignIn(true)}}>Sign In</button>
-            {signIn? <SignIn dontWantToSignIn={setSignIn}/>:""}{user? <SignOut/>:""}
+            {user? <SignOut/>:<button onClick={()=>{setSignIn(true)}}>Sign In</button>}
+            {signIn? <SignIn dontWantToSignIn={setSignIn}/>:""}
           </div>
         </header>
         <div className='coin-body'>
