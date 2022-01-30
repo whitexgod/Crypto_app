@@ -4,7 +4,7 @@ import axios from "axios";
 import loading_svg from "../assets/loading.svg";
 import close_img from "../assets/close.png";
 
-const DescriptionPopup = ({ coin_id, changeCoinId }) => {
+const DescriptionPopup = ({ coin_id, changeCoinId, coin_img }) => {
     const [fetchedData, setfetchedData] = useState({});
     const [isDescLoading, setIsDescLoading] = useState(true);
 
@@ -48,12 +48,15 @@ const DescriptionPopup = ({ coin_id, changeCoinId }) => {
                         <img src={close_img} alt="" />
                     </button>
                     <div className="details-box">
+                        <img src={coin_img} alt=""/>
+                        <h1>{fetchedData.name} ({fetchedData.symbol})</h1>
                         <p>
                             {fetchedData.description.en.replace(
                                 /(<([^>]+)>)/gi,
                                 " "
                             )}
                         </p>
+                        <h3>Homepage : <a href={`${fetchedData.links.homepage}\en`} target="_blank">{fetchedData.links.homepage}</a></h3>
                     </div>
                 </>
             )}

@@ -5,6 +5,7 @@ const Coin = (props) => {
 
     const passCoinId = () => {
         props.changeCoinId(props.coin_id);
+        props.changeCoinImg(props.coin_image)
     }
 
     return (

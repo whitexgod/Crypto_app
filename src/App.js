@@ -3,15 +3,22 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Coin } from './components/Coin';
 import DescPopup from './components/DescPopup';
+import { SignIn } from './components/SignIn';
+import {auth} from "./firebase"
+import {useAuthState} from "react-firebase-hooks/auth"
+import { SignOut } from './components/SignOut';
 //follow the readme to get the parent site for the API
 
 function App() {
 
-  const api = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=16&page=1&sparkline=false"
+  const api = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=50&page=1&sparkline=false"
 
   const [coins, setCoins] = useState([])
   const [search, setSearch] = useState('')
   const [coinId, setCoinId] = useState("");
+  const [coinImg, setCoinImg] = useState("")
+  const [signIn, setSignIn] = useState(false)
+  const [user] = useAuthState(auth)
 
   function getData() {
     axios.get(api)
@@ -32,18 +39,22 @@ function App() {
   const filteredCoins = coins.filter(coin =>
     coin.name.toLowerCase().includes(search.toLowerCase())
   )
-
+  
   return (
     <div className='App'>
-      {coinId.length ? <DescPopup coin_id={coinId} changeCoinId={setCoinId} /> : ""}
+      {coinId.length ? <DescPopup coin_id={coinId} changeCoinId={setCoinId} coin_img={coinImg} /> : ""}
       <div className={`wrapper ${coinId.length ? "fixed-noscroll" : ""}`}>
         <header>
-          <h1>Crypto World</h1>
+          <h1>Crypto Tracker</h1>
           <form>
             <input placeholder='Search Crypto Here...' type="text" name='cryto-search' onChange={
               (e) => { setSearch(e.target.value) }
             } />
           </form>
+          <div className='signIn'>
+            <button onClick={()=>{setSignIn(true)}}>Sign In</button>
+            {signIn? <SignIn dontWantToSignIn={setSignIn}/>:""}{user? <SignOut/>:""}
+          </div>
         </header>
         <div className='coin-body'>
           {filteredCoins.map(coin => {
@@ -59,7 +70,8 @@ function App() {
                 priceChange={coin.price_change_percentage_24h}
                 priceChangeMarketCap={coin.market_cap_change_percentage_24h}
                 coin_volume={coin.total_volume}
-                changeCoinId={setCoinId} />
+                changeCoinId={setCoinId}
+                changeCoinImg={setCoinImg} />
             )
           })}
         </div>

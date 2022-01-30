@@ -1,4 +1,5 @@
 .coin-box {
+    margin-top: 2rem;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -11,6 +12,7 @@
     border: 1px solid #0affe6;
     box-shadow: 0 0 1rem #8181c0;
     transition: 200ms ease-out;
+    line-height: .5rem;
 }
 
 .coin-box:hover {
@@ -27,11 +29,13 @@
     width: 10rem;
     aspect-ratio: 1;
 }
-
+.coin h1{
+    font-size: 1.5rem;
+}
 .coin-data {
     width: 100%;
     text-align: left;
-    font-size: 1.05rem;
+    font-size: 1.02rem;
 }
 
 .coin-present-red {
@@ -40,4 +44,25 @@
 
 .coin-present-green {
     color: green;
+}
+
+@media all and (max-width:420px){
+    .coin img{
+        width: 5rem;
+    }
+    .coin-box{
+        margin-top: 1rem;
+        min-width: 12rem;
+        min-height: 15rem;
+        line-height: .4rem;
+    }
+    .coin-data{
+        font-size: .9rem;
+    }
+    .coin h1{
+        font-size: 1rem;
+    }
+    .coin-box:hover {
+        transform: none;
+    }
 }
