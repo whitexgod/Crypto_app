@@ -29,15 +29,12 @@ const Coin = (props) => {
             })
         }
         else{
-            //console.log("DELETE")
             await deleteDoc(doc(db, "wishlist", props.coin_id))
         }
         user? setWishlisted(!wishlisted) : setWishlisted(false);
         //setWishlisted(!wishlisted);
         //props.update(props.coin_id);
-        //console.log(props.coin_id);
-        
-        
+        //console.log(props.coin_id);   
     }
     
     return (

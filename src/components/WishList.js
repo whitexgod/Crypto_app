@@ -1,10 +1,24 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import close_img from "../assets/close.png";
 import "./wishList.css";
 import { auth } from "../firebase";
-import { Coin } from "./Coin";
+import { db } from "../firebase";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 export const WishList = (props) => {
+  const [wishListItems, setWishListItems] = useState([]);
+  useEffect(() => {
+    const q = query(
+      collection(db, "wishlist"),
+      where("Email", "==", auth.currentUser.email) 
+    );
+    const useME = onSnapshot(q, (snapshot) => {
+      setWishListItems(snapshot.docs.map((doc) => doc.data()));
+      //  console.log(snapshot.docs.map((doc) => doc.data()));
+      //  console.log(snapshot.docs.map((doc) => doc.data().Coin_id));
+    });
+    return useME;
+  }, []);
 
   function handleCloseWishList() {
     props.closeWishList(false);
@@ -19,7 +33,9 @@ export const WishList = (props) => {
             <img src={photoURL} alt="userphoto" />
             <h4>Email : {email}</h4>
             <hr/>
-            
+            {wishListItems.map(({Coin_id, uid})=>(
+              <p key={`${uid}+${Math.floor(Math.random() * 101)}`}>{Coin_id}</p>
+            ))}
       </div>
     </div>
   );

@@ -8,16 +8,8 @@ import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SignOut } from "./components/SignOut";
 import { WishList } from "./components/WishList";
-import { db } from "./firebase";
-import {
-  collection,
-  onSnapshot,
-  query,
-  orderBy,
-  filter,
-  where,
-  addDoc
-} from "firebase/firestore";
+// import { db } from "./firebase";
+// import { collection, onSnapshot, query, where } from "firebase/firestore";
 //follow the readme to get the parent site for the API
 
 function App() {
@@ -30,7 +22,7 @@ function App() {
   const [signIn, setSignIn] = useState(false);
   const [user] = useAuthState(auth);
   const [wishList, setWishList] = useState(false);
-  const [wishListItems, setWishListItems] = useState([]);
+  // const [wishListItems, setWishListItems] = useState([]);
   //const [wishItem, setWishItem] = useState("");
 
   function getData() {
@@ -53,7 +45,6 @@ function App() {
     // eslint-disable-next-line
   }, []);
 
-
   //This is a working static module logic
   // useEffect(() => {
   //   if (wishListItems.includes(wishItem)) {
@@ -65,18 +56,19 @@ function App() {
   //   }
   //   console.log(wishListItems);
   // }, [wishItem]);
-  
-  useEffect(() => {
-    const q = query(
-      collection(db, "wishlist"), where("Email", "==", "tuhinmukherjee74@gmail.com") // replace my email with useremail
-    );
-    onSnapshot(q, (snapshot) => {
-       setWishListItems(snapshot.docs.map((doc) => doc.data().Coin_id));
-       console.log(snapshot.docs.map((doc) => doc.data().Coin_id));
-     });
-    
 
-  }, []);
+  // useEffect(() => {
+  //   const q = query(
+  //     collection(db, "wishlist"),
+  //     where("Email", "==", "tuhinmukherjee74@gmail.com") // replace my email with useremail
+  //   );
+  //   const useME = onSnapshot(q, (snapshot) => {
+  //     setWishListItems(snapshot.docs.map((doc) => doc.data()));
+  //     //  console.log(snapshot.docs.map((doc) => doc.data()));
+  //     //  console.log(snapshot.docs.map((doc) => doc.data().Coin_id));
+  //   });
+  //   return useME;
+  // }, []);
 
   return (
     <div className="App">
@@ -86,7 +78,11 @@ function App() {
         ""
       )}
       {signIn ? <SignIn dontWantToSignIn={setSignIn} /> : ""}
-      {wishList ? <WishList data={wishListItems} closeWishList={setWishList} /> : ""}
+      {wishList ? (
+        <WishList closeWishList={setWishList} />
+      ) : (
+        ""
+      )}
       <div className={`wrapper ${coinId.length ? "fixed-noscroll" : ""}`}>
         <header>
           <h1>Crypto Tracker</h1>
@@ -142,8 +138,8 @@ function App() {
                 coin_volume={coin.total_volume}
                 changeCoinId={setCoinId}
                 //update={setWishItem}
-                // iswish={(user && wishListItems.includes(coin.id))}
-                // changeWishlist={modifyWishList}
+                //iswish={(user && wishItems.includes(coin.id))}
+                //changeWishlist={modifyWishList}
               />
             );
           })}
