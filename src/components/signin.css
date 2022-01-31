@@ -45,3 +45,20 @@
 .other-logins {
     margin-top: 1rem;
 }
+.other-logins img{
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-right: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.other-logins img:hover{
+    transition: 0.7s;
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+}
+.other-logins button{
+    float: right;
+    margin-top: 15px;
+}

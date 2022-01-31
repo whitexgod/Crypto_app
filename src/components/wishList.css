@@ -1,9 +1,9 @@
-.wishList{
+.user-details-box{
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
-.wishList img{
+.user-details-box img{
     border-radius: 50%;
 }

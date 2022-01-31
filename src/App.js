@@ -7,6 +7,17 @@ import SignIn from "./components/SignIn";
 import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SignOut } from "./components/SignOut";
+import { WishList } from "./components/WishList";
+import { db } from "./firebase";
+import {
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  filter,
+  where,
+  addDoc
+} from "firebase/firestore";
 //follow the readme to get the parent site for the API
 
 function App() {
@@ -18,23 +29,9 @@ function App() {
   const [coinId, setCoinId] = useState("");
   const [signIn, setSignIn] = useState(false);
   const [user] = useAuthState(auth);
-  // const [wishlist, setwishlist] = useState(["bitcoin", "ethereum", "tether", "cardano","dogecoin"]);
-  const wishlist = ["bitcoin", "ethereum", "tether", "cardano","dogecoin"];
-
-  // function modifyWishList (elem) {
-  //   if (wishlist.includes(elem)) {
-  //     let mod = wishlist.filter((e)=>{
-  //       return e !== elem;
-  //     })
-  //     setwishlist(mod);
-  //   } else {
-  //     let tmp = wishlist;
-  //     tmp.push(elem);
-  //     setwishlist(tmp);
-  //   }
-  //   console.log(elem);
-  //   setTimeout(()=>{console.log(wishlist)}, 3000);
-  // }
+  const [wishList, setWishList] = useState(false);
+  const [wishListItems, setWishListItems] = useState([]);
+  //const [wishItem, setWishItem] = useState("");
 
   function getData() {
     axios
@@ -45,29 +42,51 @@ function App() {
       .catch((error) => console.log(error));
   }
 
-  useEffect(() => {
-    getData();
-    setInterval(getData, 5000);
-
-    // keep quite eslint......
-    // eslint-disable-next-line
-  }, []);
-
   const filteredCoins = coins.filter((coin) =>
     coin.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  useEffect(() => {
+    getData();
+    setInterval(getData, 5000);
+    // keep quite eslint......
+    // eslint-disable-next-line
+  }, []);
+
+
+  //This is a working static module logic
+  // useEffect(() => {
+  //   if (wishListItems.includes(wishItem)) {
+  //     wishListItems.splice(wishListItems.indexOf(wishItem), 1);
+  //   } else {
+  //     if (wishItem.length) {
+  //       setWishListItems([...wishListItems, wishItem]);
+  //     }
+  //   }
+  //   console.log(wishListItems);
+  // }, [wishItem]);
+  
+  useEffect(() => {
+    const q = query(
+      collection(db, "wishlist"), where("Email", "==", "tuhinmukherjee74@gmail.com") // replace my email with useremail
+    );
+    onSnapshot(q, (snapshot) => {
+       setWishListItems(snapshot.docs.map((doc) => doc.data().Coin_id));
+       console.log(snapshot.docs.map((doc) => doc.data().Coin_id));
+     });
+    
+
+  }, []);
+
   return (
     <div className="App">
       {coinId.length ? (
-        <DescPopup
-          coin_id={coinId}
-          changeCoinId={setCoinId}
-        />
+        <DescPopup coin_id={coinId} changeCoinId={setCoinId} />
       ) : (
         ""
       )}
       {signIn ? <SignIn dontWantToSignIn={setSignIn} /> : ""}
+      {wishList ? <WishList data={wishListItems} closeWishList={setWishList} /> : ""}
       <div className={`wrapper ${coinId.length ? "fixed-noscroll" : ""}`}>
         <header>
           <h1>Crypto Tracker</h1>
@@ -82,11 +101,21 @@ function App() {
             />
           </form>
           <div className="signIn-signOut">
+            <button
+              className="btn_glob"
+              onClick={() => {
+                {
+                  user ? setWishList(true) : alert("Sign-In to continue!");
+                }
+              }}
+            >
+              Wish-List
+            </button>
             {user ? (
               <SignOut />
             ) : (
               <button
-              className="btn_glob"
+                className="btn_glob"
                 onClick={() => {
                   setSignIn(true);
                 }}
@@ -96,9 +125,9 @@ function App() {
             )}
           </div>
         </header>
-      <div className={`coin-body ${signIn ? "fixed-noscroll":""}`}>
-        {filteredCoins.map((coin) => {
-          return (
+        <div className={`coin-body ${signIn ? "fixed-noscroll" : ""}`}>
+          {filteredCoins.map((coin) => {
+            return (
               <Coin
                 key={coin.id}
                 coin_id={coin.id}
@@ -112,7 +141,8 @@ function App() {
                 priceChangeMarketCap={coin.market_cap_change_percentage_24h}
                 coin_volume={coin.total_volume}
                 changeCoinId={setCoinId}
-                iswish={(user && wishlist.includes(coin.id))}
+                //update={setWishItem}
+                // iswish={(user && wishListItems.includes(coin.id))}
                 // changeWishlist={modifyWishList}
               />
             );

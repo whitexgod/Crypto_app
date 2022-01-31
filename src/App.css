@@ -62,20 +62,11 @@ header form input:focus {
     box-shadow: 0 0 1rem #7878be;
 }
 
-/* .signIn-signOut {
+.signIn-signOut {
+    display: flex;
+    gap: 1rem;
+} 
 
-} */
-
-/* .signIn-signOut button {
-    padding: 0.275rem 1rem;
-    border-radius: 5px;
-    background-color: #3668fa;
-    color: white;
-    border: none;
-    transition: 100ms ease-in-out;
-    font-size: 1rem;
-    cursor: pointer;
-} */
 .btn_glob {
     padding: 0.275rem 1rem;
     border-radius: 5px;

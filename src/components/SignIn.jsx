@@ -8,8 +8,10 @@ import {
 } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState } from "react";
+import googleIconStatic from "../assets/google_icon_static.png"
 
 const SignIn = ({ dontWantToSignIn }) => {
+
     const [user] = useAuthState(auth);
     const [isSignIn, setisSignIn] = useState(true);
 
@@ -24,7 +26,7 @@ const SignIn = ({ dontWantToSignIn }) => {
     const switchSignInSignOut = () => {
       setisSignIn(!isSignIn);
     }
-
+    
     return (
         <div className="popup">
             <button className="close-btn" onClick={handleDontWantToSignIn}>
@@ -36,9 +38,10 @@ const SignIn = ({ dontWantToSignIn }) => {
                 <div className="email-login">
                   {isSignIn ? <SignInSubComp changeState={switchSignInSignOut} /> : <SignUpSubComp changeState={switchSignInSignOut}/>}
                 </div>
-                {/* <h3>or</h3> */}
+                
                 <div className="other-logins">
-                  <button className="btn_glob" onClick={signInWithGoogle}>Sign In With Google</button>
+                <img src={googleIconStatic} onClick={signInWithGoogle} alt="google-icon" />
+                <button className="btn_glob" onClick={signInWithGoogle}>Sign In With Google</button>
                 </div>
             </div>
         </div>

@@ -1,26 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
 import "./Coin.css";
 import heart_red from "../assets/heart-red.png";
 import heart_empty from "../assets/heart-empty.png";
+import { auth } from '../firebase';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { db } from "../firebase";
+import { deleteDoc, doc, setDoc } from "firebase/firestore"
 
 const Coin = (props) => {
 
-    const [wishlisted, setWishlisted] = useState(props.iswish);
-
+    //const [wishlisted, setWishlisted] = useState(props.iswish);
+    const [wishlisted, setWishlisted] = useState(false);
+    const [user] = useAuthState(auth);
+    
     const passCoinId = () => {
         props.changeCoinId(props.coin_id);
     }
 
-    const handleWishlishClick = () => {
-        setWishlisted(!wishlisted);
-        // props.changeWishlist(props.coin_id);
+    const handleWishlishClick = async() => {
+        if(wishlisted===false){
+        //pushing to firebase
+         const {email, uid} =  auth.currentUser;
+            await setDoc(doc(db, "wishlist", props.coin_id),
+            {
+                uid: uid,
+                Email: email,
+                Coin_id : props.coin_id,
+            })
+        }
+        else{
+            //console.log("DELETE")
+            await deleteDoc(doc(db, "wishlist", props.coin_id))
+        }
+        user? setWishlisted(!wishlisted) : setWishlisted(false);
+        //setWishlisted(!wishlisted);
+        //props.update(props.coin_id);
+        //console.log(props.coin_id);
+        
+        
     }
-
+    
     return (
         <>
             <div className='coin-box'>
                 <div className='wishlist-heart'>
-                    {/* <img src={wishlisted? heart_red : heart_empty} onClick={handleWishlishClick}/> */}
                     <img src={wishlisted ? heart_red : heart_empty} onClick={handleWishlishClick} alt='wishlist'/>
                 </div>
                 <div className='coin'>
@@ -29,8 +52,8 @@ const Coin = (props) => {
                     <strong>Rank: {props.coin_rank}</strong>
                 </div>
                 <div className='coin-data'>
-                    {/* {wishlisted ? "True":"False"}
-                    {props.iswish ? "True":"False"} */}
+                    {/* {wishlisted ? "True":"False"}*/}
+                    {/*props.iswish ? "True":"False"*/} 
                     <p><strong>Current price:</strong> Rs. {props.coin_price}</p>
                     <p><strong>Volume:</strong> Rs. {props.coin_volume.toLocaleString()}</p>
                     <p><strong>Market-Cap:</strong> Rs. {props.coin_marketCap.toLocaleString()}</p>
