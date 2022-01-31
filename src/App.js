@@ -24,6 +24,7 @@ function App() {
   const [wishList, setWishList] = useState(false);
   // const [wishListItems, setWishListItems] = useState([]);
   //const [wishItem, setWishItem] = useState("");
+  var isWish=[""]
 
   function getData() {
     axios
@@ -140,6 +141,7 @@ function App() {
                 //update={setWishItem}
                 //iswish={(user && wishItems.includes(coin.id))}
                 //changeWishlist={modifyWishList}
+                iswish={isWish.includes(coin.id)}
               />
             );
           })}

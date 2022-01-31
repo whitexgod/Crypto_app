@@ -12,8 +12,12 @@ export const WishList = (props) => {
       collection(db, "wishlist"),
       where("Email", "==", auth.currentUser.email) 
     );
+    // const list=[]
     const useME = onSnapshot(q, (snapshot) => {
       setWishListItems(snapshot.docs.map((doc) => doc.data()));
+      // list.push(snapshot.docs.map((doc) => doc.data().Coin_id))
+      // console.log(list)
+      // console.log(list.includes('bitcoin'))
       //  console.log(snapshot.docs.map((doc) => doc.data()));
       //  console.log(snapshot.docs.map((doc) => doc.data().Coin_id));
     });

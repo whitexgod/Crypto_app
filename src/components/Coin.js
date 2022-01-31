@@ -9,8 +9,7 @@ import { deleteDoc, doc, setDoc } from "firebase/firestore"
 
 const Coin = (props) => {
 
-    //const [wishlisted, setWishlisted] = useState(props.iswish);
-    const [wishlisted, setWishlisted] = useState(false);
+    const [wishlisted, setWishlisted] = useState(props.iswish);
     const [user] = useAuthState(auth);
     
     const passCoinId = () => {
