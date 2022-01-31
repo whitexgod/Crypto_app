@@ -1,0 +1,47 @@
+.auth-box {
+    margin-top: 2rem;
+    background-color: #dcdcdcba;
+    padding: 1rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+}
+.email-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+.email-login > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+}
+.email-login > form > input {
+    width: 20rem;
+    height: 2.2rem;
+    border-radius: 5px;
+    padding: 0 0.7rem;
+    border: 2px solid rgb(138 146 178);
+    font-size: 0.9rem;
+    transition: 150ms ease-in-out;
+    border: none;
+}
+
+.email-login > form > input:focus {
+    outline: none;
+}
+
+.email-login > p > strong {
+    cursor: pointer;
+}
+
+.other-logins {
+    margin-top: 1rem;
+}
