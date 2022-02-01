@@ -6,4 +6,6 @@
 
 .user-details-box img{
     border-radius: 50%;
+    width: 4.5rem;
+    aspect-ratio: 1;
 }
