@@ -8,8 +8,8 @@ import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SignOut } from "./components/SignOut";
 import { WishList } from "./components/WishList";
-// import { db } from "./firebase";
-// import { collection, onSnapshot, query, where } from "firebase/firestore";
+ import { db } from "./firebase";
+ import { collection, onSnapshot, query, where } from "firebase/firestore";
 //follow the readme to get the parent site for the API
 
 function App() {
@@ -22,9 +22,9 @@ function App() {
   const [signIn, setSignIn] = useState(false);
   const [user] = useAuthState(auth);
   const [wishList, setWishList] = useState(false);
-  // const [wishListItems, setWishListItems] = useState([]);
+  const [wishListItems, setWishListItems] = useState([]);
   //const [wishItem, setWishItem] = useState("");
-  var isWish=[""]
+  //var isWish=[""]
 
   function getData() {
     axios
@@ -58,18 +58,31 @@ function App() {
   //   console.log(wishListItems);
   // }, [wishItem]);
 
-  // useEffect(() => {
-  //   const q = query(
-  //     collection(db, "wishlist"),
-  //     where("Email", "==", "tuhinmukherjee74@gmail.com") // replace my email with useremail
-  //   );
-  //   const useME = onSnapshot(q, (snapshot) => {
-  //     setWishListItems(snapshot.docs.map((doc) => doc.data()));
-  //     //  console.log(snapshot.docs.map((doc) => doc.data()));
-  //     //  console.log(snapshot.docs.map((doc) => doc.data().Coin_id));
-  //   });
-  //   return useME;
-  // }, []);
+
+//***************** */
+//for responsive wish items
+
+useEffect(() => {
+  if (user) {
+      const q = query(
+          collection(db, "wishlist"),
+          where("Email", "==", auth.currentUser.email)
+      );
+      const unSubSnapshot = onSnapshot(q, (snapshot) => {
+          setWishListItems(snapshot.docs.map((doc) => doc.data().Coin_id));
+      });
+  }
+  console.log(user ? "true" : "false");
+}, [user]);
+
+useEffect(()=>{
+  console.log(wishListItems)
+  //console.log(wishListItems.includes('bitcoin'))
+},[wishListItems])
+
+/****************** */
+
+
 
   return (
     <div className="App">
@@ -80,7 +93,7 @@ function App() {
       )}
       {signIn ? <SignIn dontWantToSignIn={setSignIn} /> : ""}
       {wishList ? (
-        <WishList closeWishList={setWishList} />
+        <WishList coins={coins} closeWishList={setWishList} />
       ) : (
         ""
       )}
@@ -138,10 +151,7 @@ function App() {
                 priceChangeMarketCap={coin.market_cap_change_percentage_24h}
                 coin_volume={coin.total_volume}
                 changeCoinId={setCoinId}
-                //update={setWishItem}
-                //iswish={(user && wishItems.includes(coin.id))}
-                //changeWishlist={modifyWishList}
-                iswish={isWish.includes(coin.id)}
+                list={wishListItems}
               />
             );
           })}
