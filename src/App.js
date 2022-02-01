@@ -72,13 +72,8 @@ useEffect(() => {
           setWishListItems(snapshot.docs.map((doc) => doc.data().Coin_id));
       });
   }
-  console.log(user ? "true" : "false");
+  //console.log(user ? "true" : "false");
 }, [user]);
-
-useEffect(()=>{
-  console.log(wishListItems)
-  //console.log(wishListItems.includes('bitcoin'))
-},[wishListItems])
 
 /****************** */
 
