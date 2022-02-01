@@ -94,7 +94,7 @@ useEffect(() => {
       )}
       <div className={`wrapper ${coinId.length ? "fixed-noscroll" : ""}`}>
         <header>
-          <h1>Crypto Tracker</h1>
+          <h1>CrYp-City</h1>
           <form>
             <input
               placeholder="Search Crypto Here..."
