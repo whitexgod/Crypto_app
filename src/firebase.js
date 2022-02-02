@@ -8,7 +8,7 @@ import {getAuth, GoogleAuthProvider} from "firebase/auth"
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDSx3F77OhD7OSB-7DuwbtkGEeyrMBHpCs",
+  apiKey: `AIzaSyDSx3F77OhD7OSB-7DuwbtkGEeyrMBHpCs`,
   authDomain: "crypto-tracker-ca82a.firebaseapp.com",
   projectId: "crypto-tracker-ca82a",
   storageBucket: "crypto-tracker-ca82a.appspot.com",
