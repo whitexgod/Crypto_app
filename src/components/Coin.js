@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from 'react';
+import React, { useState, } from 'react';
 import "./Coin.css";
 import heart_red from "../assets/heart-red.png";
 import heart_empty from "../assets/heart-empty.png";
