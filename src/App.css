@@ -44,6 +44,7 @@ header {
     flex-wrap: row;
 }
 .navbar li:hover{
+    transition: all .3s;
     color: #0707ff;
     transform: scale(1.20);
 }
