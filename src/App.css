@@ -36,7 +36,17 @@ header {
     /* for dark mode */
     /* background-color: rgb(52 60 61); */
 }
-
+.navbar ul,li{
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: row;
+}
+.navbar li:hover{
+    color: #0707ff;
+    transform: scale(1.20);
+}
 header h1 {
     letter-spacing: 0.05rem;
     text-shadow: 0 0 1rem #62688f;

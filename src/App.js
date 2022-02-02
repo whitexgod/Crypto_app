@@ -8,23 +8,26 @@ import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SignOut } from "./components/SignOut";
 import { WishList } from "./components/WishList";
- import { db } from "./firebase";
- import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "./firebase";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { TopGainers } from "./components/TopGainers";
+import { TopLoosers } from "./components/TopLoosers";
 //follow the readme to get the parent site for the API
 
 function App() {
   const api =
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=50&page=1&sparkline=false";
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false";
 
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState("");
   const [coinId, setCoinId] = useState("");
   const [signIn, setSignIn] = useState(false);
+  const [topGainers, setTopGainers] = useState(false)
+  const [topLoosers, setTopLoosers] = useState(false)
   const [user] = useAuthState(auth);
   const [wishList, setWishList] = useState(false);
   const [wishListItems, setWishListItems] = useState([]);
-  //const [wishItem, setWishItem] = useState("");
-  //var isWish=[""]
+  
 
   function getData() {
     axios
@@ -46,19 +49,6 @@ function App() {
     // eslint-disable-next-line
   }, []);
 
-  //This is a working static module logic
-  // useEffect(() => {
-  //   if (wishListItems.includes(wishItem)) {
-  //     wishListItems.splice(wishListItems.indexOf(wishItem), 1);
-  //   } else {
-  //     if (wishItem.length) {
-  //       setWishListItems([...wishListItems, wishItem]);
-  //     }
-  //   }
-  //   console.log(wishListItems);
-  // }, [wishItem]);
-
-
 //***************** */
 //for responsive wish items
 
@@ -68,16 +58,13 @@ useEffect(() => {
           collection(db, "wishlist"),
           where("Email", "==", auth.currentUser.email)
       );
-      const unSubSnapshot = onSnapshot(q, (snapshot) => {
+      onSnapshot(q, (snapshot) => {
           setWishListItems(snapshot.docs.map((doc) => doc.data().Coin_id));
       });
   }
-  //console.log(user ? "true" : "false");
 }, [user]);
 
 /****************** */
-
-
 
   return (
     <div className="App">
@@ -92,6 +79,8 @@ useEffect(() => {
       ) : (
         ""
       )}
+      {topGainers? (<TopGainers coins={coins} closeTopGainers={setTopGainers}/> ) : ("") }
+      {topLoosers? (<TopLoosers coins={coins} closeTopLoosers={setTopLoosers}/> ) : ("") }
       <div className={`wrapper ${coinId.length ? "fixed-noscroll" : ""}`}>
         <header>
           <h1>CrYp-City</h1>
@@ -106,16 +95,6 @@ useEffect(() => {
             />
           </form>
           <div className="signIn-signOut">
-            <button
-              className="btn_glob"
-              onClick={() => {
-                {
-                  user ? setWishList(true) : alert("Sign-In to continue!");
-                }
-              }}
-            >
-              Wish-List
-            </button>
             {user ? (
               <SignOut />
             ) : (
@@ -129,6 +108,25 @@ useEffect(() => {
               </button>
             )}
           </div>
+          <nav className="navbar">
+            <ul>
+              <li onClick={() => {
+                {
+                  user ? setWishList(true) : alert("Sign-In to continue!");
+                }
+              }}>WatchList</li>
+              <li onClick={() => {
+                {
+                  user ? setTopGainers(true) : alert("Sign-In to continue!");
+                }
+              }}>Gainers</li>
+              <li onClick={() => {
+                {
+                  user ? setTopLoosers(true) : alert("Sign-In to continue!");
+                }
+              }}>Loosers</li>
+            </ul>
+          </nav>
         </header>
         <div className={`coin-body ${signIn ? "fixed-noscroll" : ""}`}>
           {filteredCoins.map((coin) => {

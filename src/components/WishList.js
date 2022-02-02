@@ -6,10 +6,8 @@ import { auth } from "../firebase";
 import { db } from "../firebase";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import emptyDp from "../assets/empty_dp.png";
-import { Coin } from "./Coin";
 
 export const WishList = (props) => {
-  const [coinId, setCoinId] = useState("");
   const [wishListItems, setWishListItems] = useState([]);
   const [isWishListLoading, setIsWishListLoading] = useState(true);
   useEffect(() => {
@@ -17,14 +15,8 @@ export const WishList = (props) => {
       collection(db, "wishlist"),
       where("Email", "==", auth.currentUser.email)
     );
-    // const list=[]
     const useME = onSnapshot(q, (snapshot) => {
       setWishListItems(snapshot.docs.map((doc) => doc.data()));
-      // list.push(snapshot.docs.map((doc) => doc.data().Coin_id))
-      // console.log(list)
-      // console.log(list.includes('bitcoin'))
-      //  console.log(snapshot.docs.map((doc) => doc.data()));
-      //  console.log(snapshot.docs.map((doc) => doc.data().Coin_id));
       setIsWishListLoading(false);
     });
     return useME;
@@ -50,9 +42,9 @@ export const WishList = (props) => {
             <img src={!photoURL ? emptyDp : photoURL} alt="userphoto" />
             <h4>Email : {email}</h4>
             <hr />
-            <h2>Wish-Listed Coins</h2>
+            <h2>WatchList Coins</h2>
             <div className="coin-body">
-              {wishListItems.map(({ Coin_id, uid }) => (
+              {wishListItems.map(({ Coin_id }) => (
                 //<p key={`${uid}+${Math.floor(Math.random() * 101)}`}><p/>
                   props.coins.map((coin) => {
                     if (coin.id === Coin_id) {
