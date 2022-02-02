@@ -1,6 +1,19 @@
-.Gainers-heading
-{
+.Gainers-heading {
     text-align: center;
-    justify-content: center;
-    align-items: center;
+}
+
+.Gainers-heading p {
+    font-size: 2rem;
+    letter-spacing: 0.1rem;
+    border-bottom: 2px solid #246cd3;
+    animation: drop 0.7s ;
+}
+
+@keyframes drop {
+    0% {
+        transform: translateY(-170%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
 }

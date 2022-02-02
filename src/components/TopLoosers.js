@@ -10,7 +10,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 export const TopLoosers = (props) => {
   const [TopLoosersLoading, setTopLoosersLoading] = useState(true);
   const [wishListItems, setWishListItems] = useState([]);
-  const [coinId, setCoinId] = useState("");
+  // const [coinId, setCoinId] = useState("");
   const [user] = useAuthState(auth);
 
   //***************** */
@@ -26,6 +26,8 @@ export const TopLoosers = (props) => {
         setWishListItems(snapshot.docs.map((doc) => doc.data().Coin_id));
       });
       setTopLoosersLoading(false);
+    } else {
+      setTopLoosersLoading(false);
     }
   }, [user]);
 
@@ -39,7 +41,7 @@ export const TopLoosers = (props) => {
     <div className="popup">
       {TopLoosersLoading && (
         <div className="loadder">
-          <img src={loading_svg} alt="" />
+          <img src={loading_svg} alt="Loading...." />
         </div>
       )}
       {!TopLoosersLoading && (
@@ -48,9 +50,9 @@ export const TopLoosers = (props) => {
             <img src={close_img} alt="close" />
           </button>
           <div className="Loosers-heading">
-            <h1>Loosers List</h1>
+            <p>Loosers List</p>
           </div>
-          <div className={`coin-body `}>
+          <div className={`coin-body`} style={{ paddingTop: "2rem" }}>
             {props.coins.map((coin) => {
               if (coin.price_change_percentage_24h < 0) {
                 return (
@@ -66,10 +68,12 @@ export const TopLoosers = (props) => {
                     priceChange={coin.price_change_percentage_24h}
                     priceChangeMarketCap={coin.market_cap_change_percentage_24h}
                     coin_volume={coin.total_volume}
-                    changeCoinId={setCoinId}
+                    // changeCoinId={setCoinId}
                     list={wishListItems}
                   />
                 );
+              } else {
+                return "";
               }
             })}
           </div>

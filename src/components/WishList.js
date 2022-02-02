@@ -44,6 +44,7 @@ export const WishList = (props) => {
                 src={!photoURL ? emptyDp : photoURL}
                 alt="userphoto"
               />
+              {console.log(photoURL)}
               <p><strong>Email:</strong> {email}</p>
             </div>
             <h2>Wish-Listed Coins</h2>
@@ -52,84 +53,84 @@ export const WishList = (props) => {
                 props.coins.map((coin) => {
                   if (coin.id === Coin_id) {
                     return (
-                      <>
-                        <div className="coin-box">
-                          <div className="coin">
-                            <img
-                              src={coin.image}
-                              alt="crypto"
-                            />
-                            <h1>
-                              {coin.name} (
-                              {coin.symbol})
-                            </h1>
-                            <strong>
-                              Rank:{" "}
-                              {
-                                coin.market_cap_rank
-                              }
-                            </strong>
-                          </div>
-                          <div className="coin-data">
-                            <p>
-                              <strong>
-                                Current price:
-                              </strong>{" "}
-                              Rs.{" "}
-                              {coin.current_price}
-                            </p>
-                            <p>
-                              <strong>
-                                Volume:
-                              </strong>{" "}
-                              Rs.{" "}
-                              {coin.total_volume.toLocaleString()}
-                            </p>
-                            <p>
-                              <strong>
-                                Market-Cap:
-                              </strong>{" "}
-                              Rs.{" "}
-                              {coin.market_cap.toLocaleString()}
-                            </p>
-                            <p
-                              className={
-                                coin.price_change_percentage_24h <
-                                  0
-                                  ? "coin-present-red"
-                                  : "coin-present-green"
-                              }
-                            >
-                              <strong>
-                                %
-                                Price-change-1D:{" "}
-                              </strong>
-                              {coin.price_change_percentage_24h.toFixed(
-                                2
-                              )}
-                              %
-                            </p>
-                            <p
-                              className={
-                                coin.market_cap_change_percentage_24h <
-                                  0
-                                  ? "coin-present-red"
-                                  : "coin-present-green"
-                              }
-                            >
-                              <strong>
-                                % Market
-                                Cap-change-1D:{" "}
-                              </strong>
-                              {coin.market_cap_change_percentage_24h.toFixed(
-                                2
-                              )}
-                              %
-                            </p>
-                          </div>
+                      <div className="coin-box" key={uid}>
+                        <div className="coin">
+                          <img
+                            src={coin.image}
+                            alt="crypto"
+                          />
+                          <h1>
+                            {coin.name} (
+                            {coin.symbol})
+                          </h1>
+                          <strong>
+                            Rank:{" "}
+                            {
+                              coin.market_cap_rank
+                            }
+                          </strong>
                         </div>
-                      </>
+                        <div className="coin-data">
+                          <p>
+                            <strong>
+                              Current price:
+                            </strong>{" "}
+                            Rs.{" "}
+                            {coin.current_price}
+                          </p>
+                          <p>
+                            <strong>
+                              Volume:
+                            </strong>{" "}
+                            Rs.{" "}
+                            {coin.total_volume.toLocaleString()}
+                          </p>
+                          <p>
+                            <strong>
+                              Market-Cap:
+                            </strong>{" "}
+                            Rs.{" "}
+                            {coin.market_cap.toLocaleString()}
+                          </p>
+                          <p
+                            className={
+                              coin.price_change_percentage_24h <
+                                0
+                                ? "coin-present-red"
+                                : "coin-present-green"
+                            }
+                          >
+                            <strong>
+                              %
+                              Price-change-1D:{" "}
+                            </strong>
+                            {coin.price_change_percentage_24h.toFixed(
+                              2
+                            )}
+                            %
+                          </p>
+                          <p
+                            className={
+                              coin.market_cap_change_percentage_24h <
+                                0
+                                ? "coin-present-red"
+                                : "coin-present-green"
+                            }
+                          >
+                            <strong>
+                              % Market
+                              Cap-change-1D:{" "}
+                            </strong>
+                            {coin.market_cap_change_percentage_24h.toFixed(
+                              2
+                            )}
+                            %
+                          </p>
+                        </div>
+                      </div>
                     );
+                  } else {
+                    return "";
                   }
                 })
               )}
