@@ -60,7 +60,7 @@ function SignInSubComp(props) {
         <>
             <h2 className="heading">Login</h2>
             <form onSubmit={authEmailAndPassword}>
-                <input type="text" name="email" placeholder="Email" />
+                <input type="email" name="email" placeholder="Email" />
                 <input type="password" name="password" placeholder="Password" />
                 <button type="submit" className="btn_glob">
                     Sign In
@@ -82,7 +82,7 @@ function SignUpSubComp(props) {
         <>
             <h2 className="heading">Sign Up</h2>
             <form onSubmit={createAuthEmailAndPassword}>
-                <input type="text" name="email" placeholder="Email" />
+                <input type="email" name="email" placeholder="Email" />
                 <input type="password" name="password" placeholder="Password" />
                 <button type="submit" className="btn_glob">
                     Sign Up

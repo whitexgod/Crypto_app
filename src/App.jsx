@@ -27,7 +27,7 @@ function App() {
   const [user] = useAuthState(auth);
   const [wishList, setWishList] = useState(false);
   const [wishListItems, setWishListItems] = useState([]);
-  
+
 
   function getData() {
     axios
@@ -49,22 +49,22 @@ function App() {
     // eslint-disable-next-line
   }, []);
 
-//***************** */
-//for responsive wish items
+  //***************** */
+  //for responsive wish items
 
-useEffect(() => {
-  if (user) {
+  useEffect(() => {
+    if (user) {
       const q = query(
-          collection(db, "wishlist"),
-          where("Email", "==", auth.currentUser.email)
+        collection(db, "wishlist"),
+        where("Email", "==", auth.currentUser.email)
       );
       onSnapshot(q, (snapshot) => {
-          setWishListItems(snapshot.docs.map((doc) => doc.data().Coin_id));
+        setWishListItems(snapshot.docs.map((doc) => doc.data().Coin_id));
       });
-  }
-}, [user]);
+    }
+  }, [user]);
 
-/****************** */
+  /****************** */
 
   return (
     <div className="App">
@@ -79,9 +79,9 @@ useEffect(() => {
       ) : (
         ""
       )}
-      {topGainers? (<TopGainers coins={coins} closeTopGainers={setTopGainers}/> ) : ("") }
-      {topLoosers? (<TopLoosers coins={coins} closeTopLoosers={setTopLoosers}/> ) : ("") }
-      <div className={`wrapper ${coinId.length || wishList ? "fixed-noscroll" : ""}`}>
+      {topGainers ? (<TopGainers coins={coins} closeTopGainers={setTopGainers} />) : ("")}
+      {topLoosers ? (<TopLoosers coins={coins} closeTopLoosers={setTopLoosers} />) : ("")}
+      <div className={`wrapper ${coinId.length || wishList || topGainers || topLoosers ? "fixed-noscroll" : ""}`}>
         <header>
           <h1>CrYp-City</h1>
           <form>
@@ -94,37 +94,31 @@ useEffect(() => {
               }}
             />
           </form>
-          <div className="signIn-signOut">
-            {user ? (
-              <SignOut />
-            ) : (
-              <button
-                className="btn_glob"
-                onClick={() => {
-                  setSignIn(true);
-                }}
-              >
-                Sign In
-              </button>
-            )}
-          </div>
           <nav className="navbar">
             <ul>
               <li onClick={() => {
-                {
-                  user ? setWishList(true) : alert("Sign-In to continue!");
-                }
+                user ? setWishList(true) : setSignIn(true);
               }}>WatchList</li>
               <li onClick={() => {
-                {
-                  user ? setTopGainers(true) : alert("Sign-In to continue!");
-                }
+                setTopGainers(true);
               }}>Gainers</li>
               <li onClick={() => {
-                {
-                  user ? setTopLoosers(true) : alert("Sign-In to continue!");
-                }
+                setTopLoosers(true);
               }}>Loosers</li>
+              <li>
+                {user ? (
+                  <SignOut />
+                ) : (
+                  <button
+                    className="btn_glob"
+                    onClick={() => {
+                      setSignIn(true);
+                    }}
+                  >
+                    Sign In
+                  </button>
+                )}
+              </li>
             </ul>
           </nav>
         </header>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from 'react';
+import React, { useState, } from 'react';
 import "./Coin.css";
 import heart_red from "../assets/heart-red.png";
 import heart_empty from "../assets/heart-empty.png";
@@ -13,7 +13,9 @@ const Coin = (props) => {
     const [user] = useAuthState(auth);
 
     const passCoinId = () => {
-        props.changeCoinId(props.coin_id);
+        if (props.changeCoinId){
+            props.changeCoinId(props.coin_id);
+        }
     }
 
     const handleWishlishClick = async() => {
@@ -31,16 +33,12 @@ const Coin = (props) => {
             await deleteDoc(doc(db, "wishlist", props.coin_id))
         }
         user? setWishlisted(!wishlisted) : setWishlisted(false);
-        //setWishlisted(!wishlisted);
-        //props.update(props.coin_id);
-        //console.log(props.coin_id);   
     }
     
     return (
         <>
             <div className='coin-box'>
                 <div className='wishlist-heart'>
-                    {/* {<img src={wishlisted ? heart_red : heart_empty} onClick={handleWishlishClick} alt='wishlist'/>} */}
                     <img src={user && props.list.includes(props.coin_id) ? heart_red : heart_empty} onClick={handleWishlishClick} alt='wishlist'/>
                 </div>
                 <div className='coin'>
@@ -49,8 +47,6 @@ const Coin = (props) => {
                     <strong>Rank: {props.coin_rank}</strong>
                 </div>
                 <div className='coin-data'>
-                    {/* wishlisted ? "True":"False" */}
-                    {/*props.iswish ? "True":"False"*/} 
                     <p><strong>Current price:</strong> Rs. {props.coin_price}</p>
                     <p><strong>Volume:</strong> Rs. {props.coin_volume.toLocaleString()}</p>
                     <p><strong>Market-Cap:</strong> Rs. {props.coin_marketCap.toLocaleString()}</p>

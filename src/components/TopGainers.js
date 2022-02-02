@@ -10,7 +10,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 export const TopGainers = (props) => {
   const [TopGainersLoading, setTopGainersLoading] = useState(true);
   const [wishListItems, setWishListItems] = useState([]);
-  const [coinId, setCoinId] = useState("");
+  // const [coinId, setCoinId] = useState("");
   const [user] = useAuthState(auth);
 
   //***************** */
@@ -25,6 +25,8 @@ export const TopGainers = (props) => {
       onSnapshot(q, (snapshot) => {
         setWishListItems(snapshot.docs.map((doc) => doc.data().Coin_id));
       });
+      setTopGainersLoading(false);
+    } else {
       setTopGainersLoading(false);
     }
   }, [user]);
@@ -48,9 +50,9 @@ export const TopGainers = (props) => {
             <img src={close_img} alt="close" />
           </button>
           <div className="Gainers-heading">
-            <h1>Gainers List</h1>
+            <p>Gainers List</p>
           </div>
-          <div className={`coin-body `}>
+          <div className={`coin-body`} style={{paddingTop: "2rem"}}>
             {props.coins.map((coin) => {
               if (coin.price_change_percentage_24h > 0) {
                 return (
@@ -66,10 +68,12 @@ export const TopGainers = (props) => {
                     priceChange={coin.price_change_percentage_24h}
                     priceChangeMarketCap={coin.market_cap_change_percentage_24h}
                     coin_volume={coin.total_volume}
-                    changeCoinId={setCoinId}
+                    // changeCoinId={setCoinId}
                     list={wishListItems}
                   />
                 );
+              } else {
+                return "";
               }
             })}
           </div>
