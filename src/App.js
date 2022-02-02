@@ -81,7 +81,7 @@ useEffect(() => {
       )}
       {topGainers? (<TopGainers coins={coins} closeTopGainers={setTopGainers}/> ) : ("") }
       {topLoosers? (<TopLoosers coins={coins} closeTopLoosers={setTopLoosers}/> ) : ("") }
-      <div className={`wrapper ${coinId.length ? "fixed-noscroll" : ""}`}>
+      <div className={`wrapper ${coinId.length || wishList ? "fixed-noscroll" : ""}`}>
         <header>
           <h1>CrYp-City</h1>
           <form>
