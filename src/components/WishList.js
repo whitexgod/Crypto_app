@@ -39,65 +39,100 @@ export const WishList = (props) => {
             <img src={close_img} alt="close" />
           </button>
           <div className="user-details-box">
-            <img src={!photoURL ? emptyDp : photoURL} alt="userphoto" />
-            <h4>Email : {email}</h4>
-            <hr />
-            <h2>WatchList Coins</h2>
-            <div className="coin-body">
-              {wishListItems.map(({ Coin_id }) => (
-                //<p key={`${uid}+${Math.floor(Math.random() * 101)}`}><p/>
-                  props.coins.map((coin) => {
-                    if (coin.id === Coin_id) {
-                      return (
-                        <>
+            <div className="heading">
+              <img
+                src={!photoURL ? emptyDp : photoURL}
+                alt="userphoto"
+              />
+              <p><strong>Email:</strong> {email}</p>
+            </div>
+            <h2>Wish-Listed Coins</h2>
+            <div className="wishlist_body">
+              {wishListItems.map(({ Coin_id, uid }) =>
+                props.coins.map((coin) => {
+                  if (coin.id === Coin_id) {
+                    return (
+                      <>
                         <div className="coin-box">
                           <div className="coin">
-                            <img src={coin.image} alt="crypto" />
+                            <img
+                              src={coin.image}
+                              alt="crypto"
+                            />
                             <h1>
-                              {coin.name} ({coin.symbol})
+                              {coin.name} (
+                              {coin.symbol})
                             </h1>
-                            <strong>Rank: {coin.market_cap_rank}</strong>
+                            <strong>
+                              Rank:{" "}
+                              {
+                                coin.market_cap_rank
+                              }
+                            </strong>
                           </div>
                           <div className="coin-data">
                             <p>
-                              <strong>Current price:</strong> Rs.{" "}
+                              <strong>
+                                Current price:
+                              </strong>{" "}
+                              Rs.{" "}
                               {coin.current_price}
                             </p>
                             <p>
-                              <strong>Volume:</strong> Rs.{" "}
+                              <strong>
+                                Volume:
+                              </strong>{" "}
+                              Rs.{" "}
                               {coin.total_volume.toLocaleString()}
                             </p>
                             <p>
-                              <strong>Market-Cap:</strong> Rs.{" "}
+                              <strong>
+                                Market-Cap:
+                              </strong>{" "}
+                              Rs.{" "}
                               {coin.market_cap.toLocaleString()}
                             </p>
                             <p
                               className={
-                                coin.price_change_percentage_24h < 0
+                                coin.price_change_percentage_24h <
+                                  0
                                   ? "coin-present-red"
                                   : "coin-present-green"
                               }
                             >
-                              <strong>% Price-change-1D: </strong>
-                              {coin.price_change_percentage_24h.toFixed(2)}%
+                              <strong>
+                                %
+                                Price-change-1D:{" "}
+                              </strong>
+                              {coin.price_change_percentage_24h.toFixed(
+                                2
+                              )}
+                              %
                             </p>
                             <p
                               className={
-                                coin.market_cap_change_percentage_24h < 0
+                                coin.market_cap_change_percentage_24h <
+                                  0
                                   ? "coin-present-red"
                                   : "coin-present-green"
                               }
                             >
-                              <strong>% Market Cap-change-1D: </strong>
-                              {coin.market_cap_change_percentage_24h.toFixed(2)}%
+                              <strong>
+                                % Market
+                                Cap-change-1D:{" "}
+                              </strong>
+                              {coin.market_cap_change_percentage_24h.toFixed(
+                                2
+                              )}
+                              %
                             </p>
                           </div>
-                          </div>
-                        </>
-                      );
-                    }
-                  })  
-              ))}
+                        </div>
+                      </>
+                    );
+                  }
+                })
+              )}
             </div>
           </div>
         </>
