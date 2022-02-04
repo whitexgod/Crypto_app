@@ -1,0 +1,118 @@
+.auth-box {
+    margin-top: 2rem;
+    background-color: #dcdcdcba;
+    padding: 1rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+}
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: appear 0.3s ease-in;
+}
+
+@keyframes appear {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+.auth-form > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    gap: 1.8rem;
+    position: relative;    
+}
+.auth-form > form > input {
+    width: 20rem;
+    height: 2.2rem;
+    border-radius: 5px;
+    padding: 0 0.7rem;
+    font-size: 0.9rem;
+    transition: 150ms ease-in-out;
+    border: none;
+}
+
+.auth-form > form > input:focus {
+    /* outline: none; */
+    outline: 2px solid rgb(138 146 178);
+    /* padding: 0 0.575rem; */
+}
+
+.wrong {
+    outline: 2px solid #d11b1b;
+    color: #d11b1b;
+    animation: shake 150ms ease-in;
+}
+
+@keyframes shake {
+    0%{
+        transform: translateX(-5%);
+    }
+    33%{
+        transform: translateX(0%);
+    }
+    66%{
+        transform: translateX(5%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
+}
+
+.auth-form > form > .email-label {
+    position: absolute;
+    top: 2.8rem;
+    left: 1.2rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    line-height: 15px;
+    color: red;
+}
+
+.auth-form > form > .password-label {
+    position: absolute;
+    top: 6.9rem;
+    left: 1.2rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    line-height: 15px;
+    color: red;
+}
+
+.auth-form > p > strong {
+    cursor: pointer;
+}
+
+.other-logins {
+    margin-top: 1rem;
+}
+.other-logins img{
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-right: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.other-logins img:hover{
+    transition: 0.7s;
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+}
+.other-logins button{
+    float: right;
+    margin-top: 15px;
+}
